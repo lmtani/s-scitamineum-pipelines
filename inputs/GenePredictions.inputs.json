@@ -1,0 +1,11 @@
+{
+  "MakeGenePredictions.genome": "File",
+  "MakeGenePredictions.rna": {
+    "r1": "File",
+    "r2": "File"
+  },
+  "MakeGenePredictions.augustus_species": "String",
+  "MakeGenePredictions.busco_dataset": "String",
+  "MakeGenePredictions.sister_proteome": "File",
+  "MakeGenePredictions.num_cores": 42
+}

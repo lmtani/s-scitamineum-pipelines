@@ -1,0 +1,23 @@
+{
+  "AssemblyPolish.illumina_dna_experiments": {
+    "name": "String",
+    "technology": "String",
+    "library": "String",
+    "fastq_pairs": [
+      {
+        "r1": "File",
+        "r2": "File"
+      }
+    ]
+  },
+  "AssemblyPolish.reference_genome": "File",
+  "AssemblyPolish.long_reads_alignment": "File",
+  "AssemblyPolish.long_reads_alignment_idx": "File",
+  "AssemblyPolish.sequencing_coverage": 42,
+  "AssemblyPolish.genome_size": "String",
+  "AssemblyPolish.threads": 42,
+  "AssemblyPolish.output_name": "String",
+  "AssemblyPolish.busco_dataset": "File",
+  "AssemblyPolish.proteins": "File",
+  "AssemblyPolish.lineage_name": "String"
+}
