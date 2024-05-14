@@ -1,1 +1,1 @@
-# s-scitamineum-polish
+# _Sporisorium scitamineum_ SSC39B genome polishing
