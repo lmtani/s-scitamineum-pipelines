@@ -8,8 +8,6 @@ task Hypo {
         File reference_draft
         Int coverage
         String genome_size # e.g. 20m
-        File? long_reads_alignment
-        File? long_reads_alignment_idx
         Int threads
     }
 
@@ -18,7 +16,6 @@ task Hypo {
     command <<<
 
         hypo -b ~{alignment} \
-             -B ~{long_reads_alignment} \
              -r @~{write_lines(reads)} \
              -d ~{reference_draft} \
              -c ~{coverage} \

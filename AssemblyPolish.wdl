@@ -13,8 +13,6 @@ workflow AssemblyPolish {
 
     PairedEndExperiment illumina_dna_experiments  # Suport only one experiment
     File reference_genome
-    File long_reads_alignment
-    File long_reads_alignment_idx
     String small_variants_genotyper = "GATK"
     Int sequencing_coverage
     String genome_size  # 20m, 200m, 2g
@@ -53,8 +51,6 @@ workflow AssemblyPolish {
       alignment=IlluminaGenotyping.alignments[0],
       alignment_index=IlluminaGenotyping.alignment_indices[0],
       reference_draft=reference_genome,
-      long_reads_alignment=long_reads_alignment,
-      long_reads_alignment_idx=long_reads_alignment_idx,
       coverage=sequencing_coverage,
       genome_size=genome_size,
       threads=threads,
