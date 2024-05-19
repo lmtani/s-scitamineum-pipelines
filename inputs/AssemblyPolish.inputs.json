@@ -1,23 +1,21 @@
 {
   "AssemblyPolish.illumina_dna_experiments": {
-    "name": "String",
-    "technology": "String",
-    "library": "String",
+    "name": "SSC39A",
+    "technology": "NGS767",
+    "library": "NGS767",
     "fastq_pairs": [
       {
-        "r1": "File",
-        "r2": "File"
+          "r1": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_4_SSC39B-ds.6b6d57f485ad44d4aa44dbf2073d0ba5/NGS767_4_SSC39B_S21_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_4_SSC39B-ds.6b6d57f485ad44d4aa44dbf2073d0ba5/NGS767_4_SSC39B_S21_L001_R2_001.fastq.gz"
       }
     ]
   },
-  "AssemblyPolish.reference_genome": "File",
-  "AssemblyPolish.long_reads_alignment": "File",
-  "AssemblyPolish.long_reads_alignment_idx": "File",
-  "AssemblyPolish.sequencing_coverage": 42,
-  "AssemblyPolish.genome_size": "String",
-  "AssemblyPolish.threads": 42,
-  "AssemblyPolish.output_name": "String",
-  "AssemblyPolish.busco_dataset": "File",
-  "AssemblyPolish.proteins": "File",
-  "AssemblyPolish.lineage_name": "String"
+  "AssemblyPolish.reference_genome": "/home/taniguti/data/sscita-references/GCA_001010845.1_ASM101084v1_genomic.fna",
+  "AssemblyPolish.sequencing_coverage": 51,
+  "AssemblyPolish.genome_size": "20m",
+  "AssemblyPolish.threads": 8,
+  "AssemblyPolish.output_name": "SSC39-MAT1",
+  "AssemblyPolish.busco_dataset": "/home/taniguti/data/sscita-references/basidiomycota_odb10.tar.gz",
+  "AssemblyPolish.proteins": "/home/taniguti/data/sscita-references/GCA_900162835.1_version_2_protein_reilianum.faa",
+  "AssemblyPolish.lineage_name": "basidiomycota_odb10"
 }

@@ -4,10 +4,10 @@ import "../structs.wdl"
 
 import "../tasks/bwamem.wdl"
 import "../tasks/fastqc.wdl"
-import "../tasks/markduplicates.wdl"
 import "../tasks/samtools_sort.wdl"
 import "../tasks/converttocram.wdl"
 import "../tasks/mosdepth.wdl"
+import "../tasks/samtools_merge.wdl"
 
 
 # Workflow to align Illumina reads to a reference genome and generate a CRAM file
@@ -19,6 +19,7 @@ workflow IlluminaAlignment {
         PairedEndExperiment experiment
         ReferenceGenome reference
         Array[File] bwa_index
+        Int threads
     }
 
 
@@ -44,16 +45,16 @@ workflow IlluminaAlignment {
             input_files = flatten(fastqs)
     }
 
-
-    call markduplicates.MarkDuplicates {
+    call samtools_merge.Merge {
         input:
-            input_bams = BwaMem.bam,
-            output_bam_basename="~{experiment.name}.markdup"
+            alignments = BwaMem.bam,
+            output_basename = experiment.name,
+            threads=threads
     }
 
     call samtools_sort.Sort {
         input:
-            unsorted_alignment=MarkDuplicates.output_bam,
+            unsorted_alignment=Merge.alignment,
             output_basename="~{experiment.name}_sorted",
     }
 
@@ -82,7 +83,6 @@ workflow IlluminaAlignment {
         File sorted_alignment_index = Sort.alignment_index
         File cram = ConvertToCram.output_cram
         File cram_index = ConvertToCram.output_cram_index
-        File metrics_markdup = MarkDuplicates.metrics
         File mosdepth_summary = RunMosDepth.summary
         File mosdepth_per_base = RunMosDepth.per_base
         File mosdepth_per_base_index = RunMosDepth.per_base_index

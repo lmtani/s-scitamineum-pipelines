@@ -1,11 +1,11 @@
 {
-  "MakeGenePredictions.genome": "File",
+  "MakeGenePredictions.genome": "/home/taniguti/SSC39-MAT1.renamed.fa",
   "MakeGenePredictions.rna": {
-    "r1": "File",
-    "r2": "File"
+    "r1": "/home/taniguti/S1_GTGAAA_L006_1.fastq",
+    "r2": "/home/taniguti/S1_GTGAAA_L006_2.fastq"
   },
-  "MakeGenePredictions.augustus_species": "String",
-  "MakeGenePredictions.busco_dataset": "String",
-  "MakeGenePredictions.sister_proteome": "File",
-  "MakeGenePredictions.num_cores": 42
+  "MakeGenePredictions.augustus_species": "ustilago_maydis",
+  "MakeGenePredictions.busco_dataset": "basidiomycota_odb10",
+  "MakeGenePredictions.sister_proteome": "/home/taniguti/data/sscita-references/GCF_000328475.2_Umaydis521_2.0_protein.faa",
+  "MakeGenePredictions.num_cores": 8
 }

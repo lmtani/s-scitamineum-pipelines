@@ -17,7 +17,7 @@ workflow IlluminaGenotyping {
     input {
         Array[PairedEndExperiment] illumina_dna_experiments
         File reference_genome
-        String small_variants_genotyper = "GATK"
+        Int threads
     }
 
     call bwaindex.MakeBwaIndex {
@@ -57,6 +57,7 @@ workflow IlluminaGenotyping {
                 experiment = illumina_dna_experiment,
                 reference=bundle,
                 bwa_index=MakeBwaIndex.bwa_index,
+                threads=threads,
         }
 
         call illumina_dna_genotyping.IlluminaDnaGenotyping {
@@ -66,7 +67,6 @@ workflow IlluminaGenotyping {
             reference=bundle.reference_genome,
             reference_index=bundle.reference_genome_fai,
             reference_dict=bundle.reference_genome_dict,
-            small_variant_genotyper=small_variants_genotyper,
         }
     }
 
