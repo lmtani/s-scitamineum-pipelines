@@ -13,6 +13,7 @@ task RunMosDepth {
     File? coverage_targets
     String? threshold_values
     Boolean stub = false
+    Int threads = 8
   }
 
   Int disk_size = ceil((size(alignment, "GB") + size(reference_fasta, "GB")) * disk_multiplier)
@@ -47,7 +48,7 @@ task RunMosDepth {
     preemptible: "3"
     disks: "local-disk ~{disk_size} HDD"
     docker: "quay.io/biocontainers/mosdepth:0.3.4--hd299d5a_0"
-    cpu: "1"
+    cpu: threads
     memory: "4 GB"
   }
 

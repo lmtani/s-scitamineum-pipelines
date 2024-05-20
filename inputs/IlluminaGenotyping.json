@@ -1,0 +1,50 @@
+{
+  "IlluminaGenotyping.illumina_dna_experiments": [
+    {
+      "name": "SSC04A",
+      "technology": "ILLUMINA",
+      "library": "NGS767_1_SSC04A",
+      "fastq_pairs": [
+        {
+          "r1": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_1_SSC04A-ds.19a9800a4be245f698495cb259256670/NGS767_1_SSC04A_S22_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_1_SSC04A-ds.19a9800a4be245f698495cb259256670/NGS767_1_SSC04A_S22_L001_R2_001.fastq.gz"
+        }
+      ]
+    },
+    {
+      "name": "SSC04B",
+      "technology": "ILLUMINA",
+      "library": "NGS767_2_SSC04B",
+      "fastq_pairs": [
+        {
+          "r1": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_2_SSC04B-ds.e41443545426483b9c820599b1897356/NGS767_2_SSC04B_S19_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_2_SSC04B-ds.e41443545426483b9c820599b1897356/NGS767_2_SSC04B_S19_L001_R2_001.fastq.gz"
+        }
+      ]
+    },
+    {
+      "name": "SSC39A",
+      "technology": "ILLUMINA",
+      "library": "NGS767_3_SSC39A",
+      "fastq_pairs": [
+        {
+          "r1": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_3_SSC39A-ds.ed0c04c9364146e59c9a84ff3a6d242e/NGS767_3_SSC39A_S20_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_3_SSC39A-ds.ed0c04c9364146e59c9a84ff3a6d242e/NGS767_3_SSC39A_S20_L001_R2_001.fastq.gz"
+        }
+      ]
+    },
+    {
+      "name": "SSC39B",
+      "technology": "ILLUMINA",
+      "library": "NGS767_4_SSC39B",
+      "fastq_pairs": [
+        {
+          "r1": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_4_SSC39B-ds.6b6d57f485ad44d4aa44dbf2073d0ba5/NGS767_4_SSC39B_S21_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/data/1-sscitas-illumina-2024/BCLConvert_03_16_2024_02_30_30Z-723878187/NGS767_4_SSC39B-ds.6b6d57f485ad44d4aa44dbf2073d0ba5/NGS767_4_SSC39B_S21_L001_R2_001.fastq.gz"
+        }
+      ]
+    }
+  ],
+  "IlluminaGenotyping.reference_genome": "/home/taniguti/data/sscita-data-bundle/SSC39-MAT1.2.fasta",
+  "IlluminaGenotyping.threads": 10
+}
