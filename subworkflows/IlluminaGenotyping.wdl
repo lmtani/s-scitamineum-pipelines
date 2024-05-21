@@ -18,6 +18,7 @@ workflow IlluminaGenotyping {
         Array[PairedEndExperiment] illumina_dna_experiments
         File reference_genome
         Int threads
+        String program = "deepvariant"
     }
 
     call bwaindex.MakeBwaIndex {
@@ -67,6 +68,7 @@ workflow IlluminaGenotyping {
             reference=bundle.reference_genome,
             reference_index=bundle.reference_genome_fai,
             reference_dict=bundle.reference_genome_dict,
+            program=program,
         }
     }
 
