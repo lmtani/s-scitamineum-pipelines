@@ -2,7 +2,7 @@ version 1.1
 
 
 import "../tasks/deepvariant.wdl"
-
+import "../tasks/gatk.wdl"
 
 workflow IlluminaDnaGenotyping {
     input {
@@ -11,20 +11,40 @@ workflow IlluminaDnaGenotyping {
         File reference
         File reference_index
         File reference_dict
+
+        String program = "deepvariant"  # or gatk
     }
 
-    call deepvariant.DeepVariant {
-        input:
-            alignment = alignment,
-            alignment_index = alignment_index,
-            reference = reference,
-            reference_index = reference_index,
-            model_type="WGS",
+    if (program == "deepvariant") {
+        call deepvariant.DeepVariant {
+            input:
+                alignment = alignment,
+                alignment_index = alignment_index,
+                reference = reference,
+                reference_index = reference_index,
+                model_type="WGS",
+            }
+    }
+    if (program == "gatk") {
+        call gatk.HaplotypeCaller_GATK4_VCF {
+            input:
+                input_bam = alignment,
+                input_bam_index = alignment_index,
+                ref_fasta = reference,
+                ref_fasta_index = reference_index,
+                ref_dict = reference_dict,
+                ploidy=1,
+                make_gvcf=false,
+                make_bamout=false,
         }
+    }
+
+
+    File output_vcf = select_first([DeepVariant.output_vcf, HaplotypeCaller_GATK4_VCF.output_vcf])
+    File output_vcf_index = select_first([DeepVariant.output_vcf_index, HaplotypeCaller_GATK4_VCF.output_vcf_index])
 
     output {
-        File vcf = DeepVariant.output_vcf
-        File vcf_index = DeepVariant.output_vcf_index
-        File html_report = DeepVariant.html
+        File vcf = output_vcf
+        File vcf_index = output_vcf_index
     }
 }
