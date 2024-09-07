@@ -1,0 +1,10 @@
+{
+    "Benchmark.reference_sequence": "/home/taniguti/Documents/s-scitamineum-pipelines/data/strains/SSC39-MAT1.2.fasta",
+    "Benchmark.genome_sequences": [
+        "GCA_001010845.1",
+        "GCA_928991175.1",
+        "GCA_000772675.1",
+        "GCA_023212615.1",
+        "GCA_900002365.1"
+    ]
+}
