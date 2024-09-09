@@ -1,16 +1,30 @@
-version 1.0
+version development-1.1
+
+import "tasks/busco.wdl"
 
 # Removido GCA_001243155 -> Muito gap
 
+struct Reference {
+    File genome
+    File proteins
+}
+
+
+struct Busco {
+    File db
+    String name
+}
+
 workflow Benchmark {
     input {
-        File reference_sequence
-        Array[String] genome_sequences
+        Reference reference
+        Busco busco_lineage
+        Array[String] ncbi_identifiers  # EX: GCA_001010845.1
     }
 
     call FetchNCBI {
         input:
-            accessions = genome_sequences
+            accessions = ncbi_identifiers
     }
 
     scatter (genome in FetchNCBI.assemblies) {
@@ -22,7 +36,7 @@ workflow Benchmark {
 
         call genome_alignment {
             input:
-                reference_genome=reference_sequence,
+                reference_genome=reference.genome,
                 other_genome=DownloadAssembly.fasta,
         }
 
@@ -40,15 +54,14 @@ workflow Benchmark {
             vcf_indices=RenameSampleInVcf.output_vcf_index
     }
     
-    # call identify_hotspots {
-    #     input:
-    #         variants=create_cohort.vcf
-    # }
-
-    # output {
-    #     File hotspots = identify_hotspots.vcf
-    #     File hotspots_index = identify_hotspots.tbi
-    # }
+    call busco.BUSCO as busco_proteins {
+        input:
+            mode="proteins",
+            fasta=reference.proteins,
+            lineage=busco_lineage.name,
+            lineage_tar=busco_lineage.db,
+            ncpus=4,
+    }
 }
 
 task genome_alignment {
@@ -73,6 +86,9 @@ task genome_alignment {
 
     runtime {
         docker: "quay.io/biocontainers/mummer4:4.0.0rc1--pl5321hdbdd923_7"
+        cpu: 4
+        disks: "local-disk 10 HDD"
+        memory: "8 GB"
     }
 
     output {
@@ -89,15 +105,21 @@ task create_cohort {
     command <<<
         set -e
         # merge the VCF files
-        bcftools merge ~{sep=" " vcf_files} > cohort.vcf
+        bcftools merge ~{sep(" ", vcf_files)} > cohort.vcf
+
+        # normalize
+        bcftools norm -m -any cohort.vcf > cohort.norm.vcf
 
         # sort, bgzip and index
-        bcftools sort cohort.vcf | bgzip -c > cohort.vcf.gz
+        bcftools sort cohort.norm.vcf | bgzip -c > cohort.vcf.gz
         tabix -p vcf cohort.vcf.gz
     >>>
 
     runtime {
+        cpu: 1
         docker: "quay.io/biocontainers/bcftools:1.20--h8b25389_1"
+        disks: "local-disk 10 HDD"
+        memory: "8 GB"
     }
 
     output {
@@ -168,7 +190,7 @@ task FetchNCBI {
     runtime {
         cpu: 1
         memory: "2 GB"
-        disk: "local-disk 10 HDD"
+        disks: "local-disk 10 HDD"
         docker: "quay.io/biocontainers/biopython:1.75"
     }
 
@@ -193,7 +215,7 @@ task DownloadAssembly {
         cpu: 1
         memory: "2 GB"
         docker: "quay.io/biocontainers/wget:1.20.1"
-        disk: "local-disk 10 HDD"
+        disks: "local-disk 10 HDD"
     }
 
     output {
@@ -212,17 +234,19 @@ task RenameSampleInVcf {
     Int preemptible_tries = 3
   }
 
-  command {
+  command <<<
     java -Xms2g -jar /usr/picard/picard.jar \
             RenameSampleInVcf \
              INPUT=~{input_vcf} \
              OUTPUT=~{output_name} \
              CREATE_INDEX=true \
              NEW_SAMPLE_NAME=~{sample_name}
-  }
+  >>>
+
   runtime {
     docker: "us-east1-docker.pkg.dev/genomic-references-127893/broad-institute-images/picard-cloud:2.27.4"
-    disks: "local-disk " + disk_size + " HDD"
+    cpu: 1
+    disks: "local-disk ~{disk_size} HDD"
     memory: "3.5 GiB"
     preemptible: preemptible_tries
   }

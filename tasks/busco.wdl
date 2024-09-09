@@ -1,4 +1,4 @@
-version 1.1
+version development-1.1
 
 task BUSCO {
 
@@ -31,6 +31,8 @@ task BUSCO {
     runtime {
         docker: "ezlabgva/busco:v5.7.0_cv1"
         cpu: ncpus
+        disks: "local-disk 10 HDD"
+        memory: "8 GB"
     }
 
 

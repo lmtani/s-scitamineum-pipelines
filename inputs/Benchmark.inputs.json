@@ -1,10 +1,17 @@
 {
-    "Benchmark.reference_sequence": "/home/taniguti/Documents/s-scitamineum-pipelines/data/strains/SSC39-MAT1.2.fasta",
-    "Benchmark.genome_sequences": [
+  "Benchmark.reference": {
+    "genome": "/home/taniguti/Documents/s-scitamineum-pipelines/data/strains/SSC39-MAT1.2.fasta",
+    "proteins": "/home/taniguti/Documents/s-scitamineum-pipelines/data/sscita-data-bundle/data/SSC39-MAT1.2.faa"
+  },
+  "Benchmark.ncbi_identifiers": [
         "GCA_001010845.1",
         "GCA_928991175.1",
         "GCA_000772675.1",
         "GCA_023212615.1",
         "GCA_900002365.1"
-    ]
+  ],
+  "Benchmark.busco_lineage": {
+    "db": "/home/taniguti/github/lmtani/sscita/basidiomycota_odb10.tar.gz",
+    "name": "basidiomycota_odb10"
+  }
 }
