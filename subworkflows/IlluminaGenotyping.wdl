@@ -1,4 +1,4 @@
-version 1.1
+version development-1.1
 
 import "../structs.wdl"
 import "../tasks/bwaindex.wdl"
@@ -122,4 +122,3 @@ workflow IlluminaGenotyping {
         Array[File] variant_indices = IlluminaDnaGenotyping.vcf_index
     }
 }
-

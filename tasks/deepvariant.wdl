@@ -1,4 +1,4 @@
-version 1.1
+version development-1.1
 
 
 task DeepVariant {
@@ -16,6 +16,7 @@ task DeepVariant {
     String basename = basename(alignment, ".cram")
 
     command <<<
+        set -e
 
         run_deepvariant --version > version.txt
 
@@ -26,10 +27,14 @@ task DeepVariant {
             exit 0
         fi
 
+        # create link to reference and index to be in same directory
+        ln -s ~{reference} reference.fa
+        ln -s ~{reference_index} reference.fa.fai
+
 
         run_deepvariant \
             --model_type=~{model_type} \
-            --ref=~{reference} \
+            --ref=reference.fa \
             --reads=~{alignment} \
             --output_vcf=~{basename}.all.vcf.gz \
             --num_shards="$(nproc)" \
@@ -44,6 +49,8 @@ task DeepVariant {
 
     runtime {
         docker: "google/deepvariant:1.6.0"
+        cpu: 8
+        memory: "16 GB"
     }
 
     output {
