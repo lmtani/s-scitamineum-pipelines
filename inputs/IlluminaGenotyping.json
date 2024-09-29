@@ -39,8 +39,8 @@
       "library": "NGS767_4_SSC39B",
       "fastq_pairs": [
         {
-          "r1": "/home/taniguti/Data/reads/SSC39A/SSC39B/NGS767_4_SSC39B_S21_L001_R1_001.fastq.gz",
-          "r2": "/home/taniguti/Data/reads/SSC39A/SSC39B/NGS767_4_SSC39B_S21_L001_R2_001.fastq.gz"
+          "r1": "/home/taniguti/Data/reads/SSC39B/NGS767_4_SSC39B_S21_L001_R1_001.fastq.gz",
+          "r2": "/home/taniguti/Data/reads/SSC39B/NGS767_4_SSC39B_S21_L001_R2_001.fastq.gz"
         }
       ]
     }
