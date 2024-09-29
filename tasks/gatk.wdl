@@ -31,17 +31,21 @@ task HaplotypeCaller_GATK4_VCF {
   command <<<
     set -e
 
-
     gatk --version | grep GATK > version.txt
     if [ ~{stub} == "true" ]; then
         touch ~{output_file_name} ~{output_file_name}.tbi ~{basename}.bamout.bam
         exit 0
     fi
 
+    # create link to references in one directory
+    ln -s ~{ref_fasta} reference.fasta
+    ln -s ~{ref_fasta_index} reference.fasta.fai
+    ln -s ~{ref_dict} reference.dict
+
 
     gatk --java-options "-Xmx5000m -Xms5000m -XX:GCTimeLimit=50 -XX:GCHeapFreeLimit=10" \
       HaplotypeCaller \
-      -R ~{ref_fasta} \
+      -R reference.fasta \
       -I ~{input_bam} \
       -O ~{output_file_name} \
       -ploidy ~{ploidy} \
