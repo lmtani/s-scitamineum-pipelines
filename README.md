@@ -2,7 +2,7 @@
 
 This repository contains all the workflows used to polish and analyze the *S. scitamineum* reference genome first published in the 2015 paper:
 
-> Complete Genome Sequence of Sporisorium scitamineum and Biotrophic Interaction Transcriptome with Sugarcane. Taniguti LM, Schaker PDC, Benevenuto J, Peters LP, Carvalho G, et al. (2015) Complete Genome Sequence of Sporisorium scitamineum and Biotrophic Interaction Transcriptome with Sugarcane. PLOS ONE 10(6): e0129318. https://doi.org/10.1371/journal.pone.0129318
+> Taniguti LM, Schaker PDC, Benevenuto J, Peters LP, Carvalho G, et al. (2015) Complete Genome Sequence of *Sporisorium scitamineum* and Biotrophic Interaction Transcriptome with Sugarcane. PLOS ONE 10(6): e0129318. https://doi.org/10.1371/journal.pone.0129318
 
 An updated manuscript detailing our polishing and analyses will be available on [bioRxiv](https://www.biorxiv.org/) soon.
 
