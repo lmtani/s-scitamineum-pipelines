@@ -1,5 +1,5 @@
 {
-  "Genotyping.illumina_dna_experiments": [
+  "BatchGenotyping.illumina_dna_experiments": [
     {
       "name": "SSC04-MAT-2",
       "technology": "ILLUMINA",
@@ -45,6 +45,6 @@
       ]
     }
   ],
-  "Genotyping.reference_genome": "/home/taniguti/Data/references/SSC39-MAT1.2.fasta",
-  "Genotyping.threads": 10
+  "BatchGenotyping.reference_genome": "/home/taniguti/Data/references/SSC39-MAT1.2.fasta",
+  "BatchGenotyping.threads": 10
 }

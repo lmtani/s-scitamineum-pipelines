@@ -1,8 +1,7 @@
+# A workflow for fetching, aligning, and merging public assemblies from NCBI
+
 version development-1.1
 
-import "tasks/busco.wdl"
-
-# Removido GCA_001243155 -> Muito gap
 
 struct Reference {
     File genome
@@ -10,16 +9,11 @@ struct Reference {
 }
 
 
-struct Busco {
-    File db
-    String name
-}
 
-workflow Benchmark {
+workflow ComparePublicAssemblies {
     input {
         Reference reference
-        Busco busco_lineage
-        Array[String] ncbi_identifiers  # EX: GCA_001010845.1
+        Array[String] ncbi_identifiers  # EX: [GCA_001010845.1]
     }
 
     call FetchNCBI {
@@ -52,15 +46,6 @@ workflow Benchmark {
         input:
             vcf_files=RenameSampleInVcf.output_vcf,
             vcf_indices=RenameSampleInVcf.output_vcf_index
-    }
-    
-    call busco.BUSCO as busco_proteins {
-        input:
-            mode="proteins",
-            fasta=reference.proteins,
-            lineage=busco_lineage.name,
-            lineage_tar=busco_lineage.db,
-            ncpus=4,
     }
 }
 
@@ -127,26 +112,6 @@ task create_cohort {
         File vcf_index = "cohort.vcf.gz.tbi"
     }
 }
-
-# task identify_hotspots {
-#     input {
-#         File variants
-#     }
-
-#     command <<<
-#         # identify hotspots
-
-#     >>>
-
-#     runtime {
-#         docker: "quay.io/biocontainers/bcftools:1.20--h8b25389_1"
-#     }
-
-#     output {
-#         File vcf = "hotspots.vcf.gz"
-#         File tbi = "hotspots.vcf.gz.tbi"
-#     }
-# }
 
 task FetchNCBI {
     input {
@@ -244,7 +209,7 @@ task RenameSampleInVcf {
   >>>
 
   runtime {
-    docker: "us-east1-docker.pkg.dev/genomic-references-127893/broad-institute-images/picard-cloud:2.27.4"
+    docker: "quay.io/biocontainers/picard:2.27.4--hdfd78af_0"
     cpu: 1
     disks: "local-disk ~{disk_size} HDD"
     memory: "3.5 GiB"

@@ -1,0 +1,11 @@
+{
+  "AssemblyGenePredictions.genome": "/home/taniguti/SSC39-MAT1.renamed.fa",
+  "AssemblyGenePredictions.rna": {
+    "r1": "/home/taniguti/S1_GTGAAA_L006_1.fastq",
+    "r2": "/home/taniguti/S1_GTGAAA_L006_2.fastq"
+  },
+  "AssemblyGenePredictions.augustus_species": "ustilago_maydis",
+  "AssemblyGenePredictions.busco_dataset": "basidiomycota_odb10",
+  "AssemblyGenePredictions.sister_proteome": "/home/taniguti/data/sscita-references/GCF_000328475.2_Umaydis521_2.0_protein.faa",
+  "AssemblyGenePredictions.num_cores": 8
+}

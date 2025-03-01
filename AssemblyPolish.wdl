@@ -1,3 +1,11 @@
+# This workflow performs assembly polishing using Illumina sequencing data.
+#
+# It includes the following steps:
+# 1. Genotyping with Illumina data to identify variants.
+# 2. Generating a consensus sequence from the identified variants.
+# 3. Re-aligning Illumina data to the consensus sequence to obtain updated alignments and variants.
+# 4. Assessing the polished assembly using BUSCO.
+
 version development-1.1
 
 import "structs.wdl"
@@ -5,7 +13,6 @@ import "tasks/bcftools_consensus.wdl"
 
 import "subworkflows/IlluminaGenotyping.wdl" as illumina_genotyping
 import "subworkflows/AssemblyAssessment.wdl" as assembly_assessment
-
 
 workflow AssemblyPolish {
   input {
@@ -15,6 +22,7 @@ workflow AssemblyPolish {
     File busco_dataset
     String lineage_name
     Int threads = 8
+    String program = "deepvariant"
   }
 
 
@@ -23,6 +31,7 @@ workflow AssemblyPolish {
       illumina_dna_experiments = [illumina_dna_experiments],
       reference_genome = reference_genome,
       threads=threads,
+      program=program
   }
 
 

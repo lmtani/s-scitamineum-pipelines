@@ -1,8 +1,10 @@
+# This workflow performs batch genotyping on multiple lineages of Sporisorium scitamineum.
+
 version development-1.1
 
 import "subworkflows/IlluminaGenotyping.wdl" as illumina_genotyping
 
-workflow Genotyping {
+workflow BatchGenotyping {
     input {
         Array[PairedEndExperiment] illumina_dna_experiments
         File reference_genome

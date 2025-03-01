@@ -1,9 +1,13 @@
+# Uses Fungap to make gene annotations in the provided genome.
+# note: because it uses a software that requires a license we could
+# not make the docker image public available.
+
 version development-1.1
 
 import "structs.wdl"
 import "tasks/fungap.wdl"
 
-workflow MakeGenePredictions {
+workflow AssemblyGenePredictions {
     input {
         File genome
         FastqPair rna

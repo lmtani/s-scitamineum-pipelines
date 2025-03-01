@@ -1,0 +1,30 @@
+name: Validate WDL Workflows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-wdl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Validate WDL files
+        run: |
+          # For each .wdl file in the repository root, find a matching .inputs.json file in /inputs
+          for WDL in *.wdl; do
+            BASENAME=$(basename "$WDL" .wdl)
+            JSON="inputs/${BASENAME}.inputs.json"
+
+            if [ -f "$JSON" ]; then
+              echo "Validating $WDL with $JSON"
+              docker run --rm -v "$(pwd)":/data broadinstitute/womtool:88 \
+                validate -i /data/"$JSON" /data/"$WDL"
+            else
+              echo "No matching inputs file found for $WDL. Skipping..."
+            fi
+          done
