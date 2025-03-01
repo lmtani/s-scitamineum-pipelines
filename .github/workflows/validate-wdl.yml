@@ -13,18 +13,24 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: Validate WDL files
+      - name: Download Womtool
         run: |
-          # For each .wdl file in the repository root, find a matching .inputs.json file in /inputs
+          # Specify whichever Womtool release you'd like:
+          WOMTOOL_VERSION="88"
+          wget "https://github.com/broadinstitute/cromwell/releases/download/${WOMTOOL_VERSION}/womtool-${WOMTOOL_VERSION}.jar" -O womtool.jar
+
+      - name: Validate WDL files
+        shell: bash
+        run: |
+          # For each WDL in the repository root, find a matching JSON in the inputs/ directory
           for WDL in *.wdl; do
             BASENAME=$(basename "$WDL" .wdl)
             JSON="inputs/${BASENAME}.inputs.json"
 
             if [ -f "$JSON" ]; then
               echo "Validating $WDL with $JSON"
-              docker run --rm -v "$(pwd)":/data broadinstitute/womtool:88 \
-                validate -i /data/"$JSON" /data/"$WDL"
+              java -jar womtool.jar validate -i "$JSON" "$WDL"
             else
-              echo "No matching inputs file found for $WDL. Skipping..."
+              echo "No matching inputs file found for $WDL, skipping..."
             fi
           done
