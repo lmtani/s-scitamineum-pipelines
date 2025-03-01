@@ -34,7 +34,7 @@ Alongside the polishing workflows, this repository also includes additional WDL 
 
 ### AssemblyPolish
 
-This WDL workflow automates the process of correcting and refining a given reference genome
+Automates the process of correcting and refining a given reference genome
 using high-quality Illumina reads through multiple rounds of variant calling and consensus
 generation, followed by quality assessment with BUSCO.
 
@@ -67,9 +67,11 @@ generation, followed by quality assessment with BUSCO.
 This workflow facilitates an iterative approach to assembly polishing by incorporating robust variant
 calling and consensus generation, followed by a comprehensive assessment of genome completeness.
 
+---
+
 ### ComparePublicAssemblies
 
-This WDL workflow automates the process of downloading multiple genome assemblies from NCBI by accession number,
+Automates the process of downloading multiple genome assemblies from NCBI by accession number,
 aligning them to a provided reference genome, and merging the resulting variant calls into a single cohort VCF.
 
 **Key steps:**
@@ -93,9 +95,11 @@ aligning them to a provided reference genome, and merging the resulting variant 
 This workflow can be used to compare a set of public genomes (specified by their NCBI accession numbers) against
 a single reference genome, generating a unified set of variants across all samples for downstream analyses.
 
+---
+
 ### BatchGenotyping
 
-This workflow performs batch genotyping on multiple lineages of *Sporisorium scitamineum* using
+Performs batch genotyping on multiple lineages of *Sporisorium scitamineum* using
 Illumina sequencing data. It aligns sequencing reads to a reference genome and calls variants
 using GATK.
 
@@ -121,9 +125,11 @@ using GATK.
 This workflow is optimized for processing multiple samples in parallel, facilitating comparative
 genomic analyses of *S. scitamineum* lineages.
 
+---
+
 ### AssemblyGenePredictions
 
-This workflow annotates genes in a provided genome assembly using FunGAP, integrating RNA-seq
+Annotates genes in a provided genome assembly using FunGAP, integrating RNA-seq
 data and a sister proteome to improve gene predictions. Due to licensing restrictions, the required
 software cannot be distributed via a public Docker image.
 
