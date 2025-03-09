@@ -5,10 +5,20 @@ task Multiqc {
     input {
         Array[File] reports
         String basename = "multiqc_report"
+        Boolean stub = false
     }
 
     command <<<
         set -e
+
+        multiqc --version > version.txt
+        if [ ~{stub} = true ]; then
+            mkdir ~{basename}
+            touch ~{basename}/~{basename}.html
+            touch ~{basename}/~{basename}_data.zip
+            exit 0
+        fi
+
         mkdir inputs
         for report in ~{sep(" ", reports)}; do
             ln -s ${report} inputs/
@@ -26,5 +36,6 @@ task Multiqc {
     output {
         File report = "~{basename}/~{basename}.html"
         File zip = "~{basename}/~{basename}_data.zip"
+        File version = "version.txt"
     }
 }

@@ -14,7 +14,7 @@ task Sort {
 
   command <<<
       samtools --version | grep "^samtools" > version.txt
-      if [ ~{stub} == "true" ]; then
+      if [ ~{stub} = true ]; then
         touch ~{output_basename}.bam \
               ~{output_basename}.bam.bai
         exit 0
@@ -35,5 +35,6 @@ task Sort {
   output {
     File alignment = "~{output_basename}.bam"
     File alignment_index = "~{output_basename}.bam.bai"
+    File version = "version.txt"
   }
 }

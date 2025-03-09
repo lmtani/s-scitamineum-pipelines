@@ -5,9 +5,18 @@ task Consensus {
         String basename
         File fasta
         File variants
+        Boolean stub = false
     }
 
     command <<<
+        set -ex
+
+        bcftools --version | grep bcftools > version.txt
+        if [ ~{stub} = true ]; then
+            touch ~{basename}.fa
+            exit 0
+        fi
+
         bcftools index --tbi ~{variants}
         bcftools consensus -f ~{fasta} -o ~{basename}.fa ~{variants}
     >>>
@@ -19,5 +28,6 @@ task Consensus {
 
     output {
         File consensus = "~{basename}.fa"
+        File version = "version.txt"
     }
 }

@@ -9,9 +9,9 @@ task FastQC {
     Int memory = threads * 250  # 250MB per thread, as per FastQC documentation
 
     command <<<
-    set -e
-    mkdir -p outputs
-    fastqc -t ~{threads} -o outputs ~{sep(' ', input_files)}
+        set -e
+        mkdir -p outputs
+        fastqc -t ~{threads} -o outputs ~{sep(' ', input_files)}
     >>>
 
     runtime {

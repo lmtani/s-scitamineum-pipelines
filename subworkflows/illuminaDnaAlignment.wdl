@@ -20,6 +20,7 @@ workflow IlluminaAlignment {
         ReferenceGenome reference
         Array[File] bwa_index
         Int threads
+        Boolean stub = false
     }
 
 
@@ -37,6 +38,7 @@ workflow IlluminaAlignment {
                 sample_name = experiment.name,
                 library = experiment.library,
                 technology=experiment.technology,
+                stub=stub,
         }
     }
 
@@ -49,13 +51,15 @@ workflow IlluminaAlignment {
         input:
             alignments = BwaMem.bam,
             output_basename = experiment.name,
-            threads=threads
+            threads=threads,
+            stub=stub,
     }
 
     call samtools_sort.Sort {
         input:
             unsorted_alignment=Merge.alignment,
             output_basename="~{experiment.name}_sorted",
+            stub=stub,
     }
 
     call converttocram.ConvertToCram {
@@ -64,6 +68,7 @@ workflow IlluminaAlignment {
             ref_fasta=reference.reference_genome,
             ref_fasta_index=reference.reference_genome_fai,
             output_basename=experiment.name,
+            stub=stub,
     }
 
     call mosdepth.RunMosDepth {
@@ -74,7 +79,8 @@ workflow IlluminaAlignment {
             reference_fasta_index=reference.reference_genome_fai,
             out_basename=experiment.name,
             coverage_targets=reference.reference_genome_bed,
-            threshold_values="5,10,15,20,30,40,50,60,70,80,90,100"
+            threshold_values="5,10,15,20,30,40,50,60,70,80,90,100",
+            stub=stub,
     }
 
 
@@ -92,5 +98,13 @@ workflow IlluminaAlignment {
         File? mosdepth_thresholds_index = RunMosDepth.thresholds_index
         File? mosdepth_regions = RunMosDepth.regions
         File? mosdepth_regions_index = RunMosDepth.regions_index
+        Array[File] software_versions = flatten([
+            [
+                Sort.version,
+                ConvertToCram.version,
+                RunMosDepth.version,
+            ],
+            BwaMem.version,
+        ])
     }
 }

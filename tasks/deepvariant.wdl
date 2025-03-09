@@ -20,10 +20,10 @@ task DeepVariant {
 
         run_deepvariant --version > version.txt
 
-        if [ ~{stub} == "true" ]; then
+        if [ ~{stub} = true ]; then
             touch "~{basename}.vcf.gz" \
                   "~{basename}.vcf.gz.tbi" \
-                  "~{basename}.visual_report.html"
+                  "~{basename}.all.visual_report.html"
             exit 0
         fi
 

@@ -1,0 +1,19 @@
+{
+  "AssemblyPolish.illumina_dna_experiments": {
+    "name": "SSC39A",
+    "technology": "ILLUMINA",
+    "library": "NGS767",
+    "fastq_pairs": [
+      {
+          "r1": "/home/taniguti/github/lmtani/s-scitamineum-polish/inputs/mock/file.mock",
+          "r2": "/home/taniguti/github/lmtani/s-scitamineum-polish/inputs/mock/file.mock"
+      }
+    ]
+  },
+  "AssemblyPolish.reference_genome": "/home/taniguti/github/lmtani/s-scitamineum-polish/inputs/mock/reference.fa",
+  "AssemblyPolish.threads": 8,
+  "AssemblyPolish.output_name": "SSC39-MAT1",
+  "AssemblyPolish.busco_dataset": "/home/taniguti/github/lmtani/s-scitamineum-polish/inputs/mock/file.mock",
+  "AssemblyPolish.lineage_name": "basidiomycota_odb10",
+  "AssemblyPolish.stub": true
+}

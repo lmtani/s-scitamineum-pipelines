@@ -3,11 +3,20 @@ version development-1.1
 task MakeBedFromFai {
     input {
         File fai
+        Boolean stub = false
     }
 
     String outname = basename(fai, ".fai") + ".bed"
 
     command <<<
+        set -e
+
+        python -c "import pandas; print(\"pandas: \", pandas.__version__)" > version.txt
+        if [ ~{stub} = true ]; then
+            touch ~{outname}
+            exit 0
+        fi
+
         python <<CODE
 
         import pandas as pd
@@ -30,5 +39,6 @@ task MakeBedFromFai {
 
     output {
         File bed = outname
+        File version = "version.txt"
     }
 }

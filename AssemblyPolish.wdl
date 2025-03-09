@@ -23,6 +23,7 @@ workflow AssemblyPolish {
     String lineage_name
     Int threads = 8
     String program = "deepvariant"
+    Boolean stub = false
   }
 
 
@@ -31,7 +32,8 @@ workflow AssemblyPolish {
       illumina_dna_experiments = [illumina_dna_experiments],
       reference_genome = reference_genome,
       threads=threads,
-      program=program
+      program=program,
+      stub = stub
   }
 
 
@@ -40,6 +42,7 @@ workflow AssemblyPolish {
       basename = output_name,
       fasta = reference_genome,
       variants = IlluminaGenotyping.variants[0],
+      stub = stub
   }
 
   # Need only new alignment. Conveniente use Genotyping pipeline because of reports
@@ -48,6 +51,7 @@ workflow AssemblyPolish {
       illumina_dna_experiments = [illumina_dna_experiments],
       reference_genome = Consensus.consensus,
       threads=threads,
+      stub = stub
   }
 
   # Assessing
@@ -56,6 +60,7 @@ workflow AssemblyPolish {
       genome = Consensus.consensus,
       busco_dataset = busco_dataset,
       lineage_name = lineage_name,
+      stub = stub
   }
 
   output {
@@ -68,5 +73,6 @@ workflow AssemblyPolish {
     File variants_idx = final.variant_indices[0]
     Array[File] busco_genome = AssemblyAssesment.genome_outputs
     Array[File]? busco_proteins = AssemblyAssesment.protein_outputs
+    Array[File] versions = flatten([final.software_versions, [Consensus.version, AssemblyAssesment.software_version]])
   }
 }

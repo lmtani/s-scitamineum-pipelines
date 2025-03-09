@@ -19,26 +19,31 @@ workflow IlluminaGenotyping {
         File reference_genome
         Int threads
         String program = "deepvariant"
+        Boolean stub = false
     }
 
     call bwaindex.MakeBwaIndex {
         input:
-            reference_genome = reference_genome
+            reference_genome = reference_genome,
+            stub = stub
     }
 
     call faidx.Faidx {
         input:
             fasta = reference_genome,
+            stub = stub
     }
 
     call createsequencedictionary.CreateSequenceDictionary {
         input:
             fasta = reference_genome,
+            stub = stub
     }
 
     call custom.MakeBedFromFai {
         input:
-            fai = Faidx.fai
+            fai = Faidx.fai,
+            stub = stub
     }
 
     ReferenceGenome bundle = ReferenceGenome {
@@ -59,6 +64,7 @@ workflow IlluminaGenotyping {
                 reference=bundle,
                 bwa_index=MakeBwaIndex.bwa_index,
                 threads=threads,
+                stub = stub
         }
 
         call illumina_dna_genotyping.IlluminaDnaGenotyping {
@@ -69,6 +75,7 @@ workflow IlluminaGenotyping {
             reference_index=bundle.reference_genome_fai,
             reference_dict=bundle.reference_genome_dict,
             program=program,
+            stub = stub
         }
     }
 
@@ -80,6 +87,7 @@ workflow IlluminaGenotyping {
                 vcf = vcf,
                 fasta = bundle.reference_genome,
                 fasta_idx = bundle.reference_genome_fai,
+                stub = stub
         }
     }
 
@@ -94,23 +102,32 @@ workflow IlluminaGenotyping {
                 reference_fasta_index=bundle.reference_genome_fai,
                 out_basename=basename(pair.left, ".cram"),
                 coverage_targets=bundle.reference_genome_bed,
-                threshold_values="5,10,15,20,30,40,50,60,70,80,90,100"
+                threshold_values="5,10,15,20,30,40,50,60,70,80,90,100",
+                stub = stub
         }
     }
+
+    Array[File] stats = flatten([Stats.stats])
 
     # Prepare the final report
     call multiqc.Multiqc as AnalysisReport {
         input:
             basename=bundle.name,
-            reports=flatten([mosdepth_dna.summary, mosdepth_dna.global_dist, IlluminaDnaGenotyping.vcf, Stats.stats])
+            reports=flatten([mosdepth_dna.summary, mosdepth_dna.global_dist, IlluminaDnaGenotyping.vcf, stats]),
+            stub = stub
     }
 
     call multiqc.Multiqc as RawDataReport {
         input:
             basename=bundle.name + "_raw",
-            reports=flatten(IlluminaAlignment.fastqc_zip_reports)
+            reports=flatten(IlluminaAlignment.fastqc_zip_reports),
+            stub = stub
     }
 
+    Array[File] subworkflow_versions = flatten([
+        flatten(IlluminaAlignment.software_versions), 
+        flatten(IlluminaDnaGenotyping.software_versions), 
+    ])
 
     output {
         File multiqc_report = AnalysisReport.report
@@ -120,5 +137,17 @@ workflow IlluminaGenotyping {
         Array[File] alignment_indices = cram_indices
         Array[File] variants = IlluminaDnaGenotyping.vcf
         Array[File] variant_indices = IlluminaDnaGenotyping.vcf_index
+        Array[File] software_versions = flatten([
+            [
+                MakeBwaIndex.version, 
+                Faidx.version, 
+                CreateSequenceDictionary.version, 
+                MakeBedFromFai.version,
+                AnalysisReport.version
+            ], 
+            subworkflow_versions,
+            stats,
+            mosdepth_dna.version,
+        ])
     }
 }

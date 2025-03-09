@@ -13,6 +13,7 @@ workflow IlluminaDnaGenotyping {
         File reference_dict
 
         String program = "deepvariant"  # or gatk
+        Boolean stub = false
     }
 
     if (program == "deepvariant") {
@@ -23,6 +24,7 @@ workflow IlluminaDnaGenotyping {
                 reference = reference,
                 reference_index = reference_index,
                 model_type="WGS",
+                stub=stub,
             }
     }
     if (program == "gatk") {
@@ -36,6 +38,7 @@ workflow IlluminaDnaGenotyping {
                 ploidy=1,
                 make_gvcf=false,
                 make_bamout=false,
+                stub=stub,
         }
     }
 
@@ -46,5 +49,6 @@ workflow IlluminaDnaGenotyping {
     output {
         File vcf = output_vcf
         File vcf_index = output_vcf_index
+        Array[File] software_versions = select_all([DeepVariant.version, HaplotypeCaller_GATK4_VCF.version])
     }
 }

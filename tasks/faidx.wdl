@@ -3,11 +3,20 @@ version development-1.1
 task Faidx {
     input {
         File fasta
+        Boolean stub = false
     }
 
     String outname = basename(fasta) + ".fai"
 
     command <<<
+        set -e
+
+        samtools --version > version.txt
+        if [ ~{stub} = true ]; then
+            touch ~{outname}
+            exit 0
+        fi
+
         samtools faidx --fai-idx ./~{outname} ~{fasta}
     >>>
 
@@ -17,5 +26,6 @@ task Faidx {
 
     output {
         File fai = "./~{outname}"
+        File version = "version.txt"
     }
 }
