@@ -1,6 +1,6 @@
 {
   "AssemblyPolish.illumina_dna_experiments": {
-    "name": "SSC39A",
+    "name": "SSC39B",
     "technology": "ILLUMINA",
     "library": "NGS767",
     "fastq_pairs": [
