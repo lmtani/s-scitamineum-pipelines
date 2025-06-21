@@ -200,12 +200,12 @@ task RenameSampleInVcf {
   }
 
   command <<<
-    java -Xms2g -jar /usr/picard/picard.jar \
-            RenameSampleInVcf \
-             INPUT=~{input_vcf} \
-             OUTPUT=~{output_name} \
-             CREATE_INDEX=true \
-             NEW_SAMPLE_NAME=~{sample_name}
+    picard \
+        RenameSampleInVcf \
+        INPUT=~{input_vcf} \
+        OUTPUT=~{output_name} \
+        CREATE_INDEX=true \
+        NEW_SAMPLE_NAME=~{sample_name}
   >>>
 
   runtime {
