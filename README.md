@@ -4,7 +4,7 @@ This repository contains all the workflows used to polish and analyze the *S. sc
 
 > Taniguti LM, Schaker PDC, Benevenuto J, Peters LP, Carvalho G, et al. (2015) Complete Genome Sequence of *Sporisorium scitamineum* and Biotrophic Interaction Transcriptome with Sugarcane. PLOS ONE 10(6): e0129318. https://doi.org/10.1371/journal.pone.0129318
 
-An updated manuscript detailing our polishing and analyses will be available on [bioRxiv](https://www.biorxiv.org/) soon.
+An updated manuscript detailing our polishing and analyses is now available on [bioRxiv](https://www.biorxiv.org/content/10.1101/2025.05.23.649816v1).
 
 Alongside the polishing workflows, this repository also includes additional WDL scripts for comparing public assemblies, batch genotyping, and gene annotation.
 
